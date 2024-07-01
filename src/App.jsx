@@ -4,10 +4,11 @@ import panoramaImage from './unswtest.jpg'; // Import the image
 
 function App() {
   const pannellumContainer = useRef(null);
+  const pannellumViewer = useRef(null);
 
   useEffect(() => {
     if (window.pannellum && pannellumContainer.current) {
-      window.pannellum.viewer(pannellumContainer.current, {
+      pannellumViewer.current = pannellum.viewer(pannellumContainer.current, {
         type: "equirectangular",
         panorama: panoramaImage, // Relative path to your panorama image in the public directory
         autoLoad: true,
@@ -17,11 +18,12 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Panorama Viewer with Pannellum</h1>
       <div
         ref={pannellumContainer}
-        style={{ width: "100%", height: "100vh" }}
-      ></div>
+        style={{ width: "750px", height: "750px" }}
+      >
+      </div>
+        <button onClick={() => pannellumViewer.current.toggleFullscreen()}>click me for full screen</button>
     </div>
   );
 }
