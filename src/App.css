@@ -1,6 +1,30 @@
 .App {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+}
+
+#map-container {
+  display: flex;
+  position: absolute;
+}
+
+#main {
+  display: flex;
+  flex-direction: column;
+}
+
+#map {
+  position: relative;
+}
+
+#map-overlay {
+  width: 750px;
+  height: 750px;
+  display: flex;
+  align-items: baseline;
+  justify-content: right;
+  position: absolute;
+  top: 520px;
+  right: 120px;
 }
