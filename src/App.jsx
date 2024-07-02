@@ -122,7 +122,7 @@ function App() {
       </div>
         <div>
         <button onClick={() => pannellumViewer.current.toggleFullscreen()}>click me for full screen</button>
-        <p>Distance between is {distance}m</p>
+        <p>You are {distance} metres away</p>
         </div>
     </div>
   );
