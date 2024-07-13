@@ -9,10 +9,27 @@
     <link rel="stylesheet" href="https://api.mazemap.com/js/v2.1.2/mazemap.min.css">
     <script type='text/javascript' src='https://api.mazemap.com/js/v2.1.2/mazemap.min.js'></script>
     <title>Vite + React</title>
-    <script type="module" crossorigin src="/360-view/assets/index-Br_aKUz7.js"></script>
-    <link rel="stylesheet" crossorigin href="/360-view/assets/index-Dku75MUM.css">
+    <script type="module" crossorigin src="/360-view/assets/index-DGuZOjc6.js"></script>
+    <link rel="stylesheet" crossorigin href="/360-view/assets/index-BmBQq2-U.css">
   </head>
   <body>
     <div id="root"></div>
+    <div id="panorama"></div>
+    <script>
+    pannellum.viewer('panorama', {
+        "hfov": 100.0,
+        "type": "multires",
+        "multiRes": {
+            "basePath": "src/multires",
+            "path": "/%l/%s%y_%x",
+            "fallbackPath": "/fallback/%s",
+            "extension": "jpg",
+            "tileResolution": 512,
+            "maxLevel": 4,
+            "cubeResolution": 2440
+        },
+        autoLoad: true
+    });
+    </script>
   </body>
 </html>

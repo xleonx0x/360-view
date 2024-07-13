@@ -15,16 +15,8 @@ function App() {
   useEffect(() => {
       pannellumViewer.current = pannellum.viewer(pannellumContainer.current, {
         "hfov": 100.0,
-        "type": "multires",
-        "multiRes": {
-            "basePath": "multires",
-            "path": "/%l/%s%y_%x",
-            "fallbackPath": "/fallback/%s",
-            "extension": "jpg",
-            "tileResolution": 512,
-            "maxLevel": 4,
-            "cubeResolution": 2440
-        },
+        "type": "equirectangular",
+        "panorama": panoramaImage,
         autoLoad: true
       });
   }, []);
