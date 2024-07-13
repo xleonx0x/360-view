@@ -13,5 +13,22 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
+    <div id="panorama"></div>
+    <script>
+    pannellum.viewer('panorama', {
+        "hfov": 100.0,
+        "type": "multires",
+        "multiRes": {
+            "basePath": "src/multires",
+            "path": "/%l/%s%y_%x",
+            "fallbackPath": "/fallback/%s",
+            "extension": "jpg",
+            "tileResolution": 512,
+            "maxLevel": 4,
+            "cubeResolution": 2440
+        },
+        autoLoad: true
+    });
+    </script>
   </body>
 </html>
