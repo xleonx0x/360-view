@@ -1,10 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './App.css';
-import panoramaImage from './unswtest.jpg'; // Import the image
+import panoramaImage from './epictest.jpg'; // Import the image
 import exifr from 'exifr';
 import { getDistance } from 'geolib';
-
-
 
 function App() {
   const pannellumContainer = useRef(null);
@@ -54,7 +52,7 @@ function App() {
           marker = new Mazemap.MazeMarker( {
             color: "#988926",
             size: 20,
-            zLevel: 0 // The floor zLevel coordinate is given here
+            zLevel: e.zLevel // The floor zLevel coordinate is given here
         } )
         .setLngLat( lngLat ) // Set the LngLat coordinates here
         .addTo(mapViewer.current); // Now add to the map
@@ -85,6 +83,14 @@ function App() {
                 },
           
         })
+
+        Mazemap.Data.getPoiAt(lngLat, marker.zLevel).then( poi => {
+
+          // Now you can do what you want with the returned POI
+          console.log('Found poi', poi);
+
+          // Place a marker on the map, or highlight the room  
+      })
         
         let cool = getDistance(
           {latitude: lngLat.lat, longitude: lngLat.lng},
