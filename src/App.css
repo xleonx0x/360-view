@@ -19,8 +19,8 @@
 }
 
 #map-overlay {
-  width: 750px;
-  height: 750px;
+  width: 250px;
+  height: 250px;
   display: flex;
   align-items: baseline;
   justify-content: right;
@@ -41,5 +41,13 @@ a.mapboxgl-ctrl-logo {
   display: none;
 }
 .mapboxgl-ctrl.mapboxgl-ctrl-attrib.mm-attribution-control-override {
+  display: none;
+}
+
+/*
+position: absolute by defaults supercedes display:none
+*/
+.pnlm-panorama-info {
+  position: relative;
   display: none;
 }
