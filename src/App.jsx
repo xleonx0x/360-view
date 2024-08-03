@@ -11,13 +11,12 @@ function App() {
   const [distance, setDistance] = useState(0);
 
   useEffect(() => {
-    if (window.pannellum && pannellumContainer.current) {
       pannellumViewer.current = pannellum.viewer(pannellumContainer.current, {
-        type: "equirectangular",
-        panorama: panoramaImage, // Relative path to your panorama image in the public directory
-        autoLoad: true,
+        "hfov": 100.0,
+        "type": "equirectangular",
+        "panorama": panoramaImage,
+        autoLoad: true
       });
-    }
   }, []);
   var marker;
   
@@ -56,6 +55,10 @@ function App() {
         } )
         .setLngLat( lngLat ) // Set the LngLat coordinates here
         .addTo(mapViewer.current); // Now add to the map
+
+        Mazemap.Data.getPoiAt(lngLat, mapViewer.current.zLevel, 111).then(poi => {
+          console.log(poi);
+        })
 
         mapViewer.current.addLayer({
           id: "line1",
@@ -99,8 +102,186 @@ function App() {
         setDistance(cool)
         });
         mapViewer.current.on('load', function(){
-          // Add zoom and rotation controls to the map.
+          console.log(mapViewer.current.getStyle());
+          
+            let style = mapViewer.current.getStyle();
+            // hidden mode
+            // style.layers = style.layers.filter(layer => layer.type !== 'symbol');
+            // layer 143 room names
+            // layer 144 building names
 
+            let layer143 = style.layers[143];
+            let layer144 = style.layers[144];
+            let layer146 = style.layers[146];
+
+            layer143.layout = {
+                "text-field": "{text}",
+                "text-font": [
+                    "Open Sans Semibold",
+                    "Arial Unicode MS Bold"
+                ],
+                "text-padding": 7,
+                "text-size": {
+                    "base": 1,
+                    "stops": [
+                        [
+                            17,
+                            10
+                        ],
+                        [
+                            20,
+                            16
+                        ],
+                        [
+                            20.9,
+                            22
+                        ]
+                    ]
+                },
+                "text-anchor": "center",
+          };
+          layer144.layout = {
+            "text-field": "{text}",
+            "text-allow-overlap": false,
+            "symbol-avoid-edges": false,
+            "text-size": {
+                "base": 1,
+                "stops": [
+                    [
+                        13,
+                        10
+                    ],
+                    [
+                        16,
+                        12
+                    ],
+                    [
+                        17,
+                        14
+                    ],
+                    [
+                        20,
+                        20
+                    ]
+                ]
+            },
+            "text-font": {
+                "base": 1,
+                "stops": [
+                    [
+                        10,
+                        [
+                            "Open Sans Regular"
+                        ]
+                    ],
+                    [
+                        17,
+                        [
+                            "Open Sans Bold"
+                        ]
+                    ]
+                ]
+            },
+            "text-letter-spacing": 0.05,
+            "text-padding": 10.75
+        };
+
+        layer146.layout = {
+          "symbol-avoid-edges": false,
+          "text-field": "University of New South Wales",
+          "text-font": {
+              "base": 1,
+              "stops": [
+                  [
+                      4,
+                      [
+                          "DIN Offc Pro Bold"
+                      ]
+                  ],
+                  [
+                      5,
+                      [
+                          "DIN Offc Pro Bold"
+                      ]
+                  ],
+                  [
+                      17,
+                      [
+                          "DIN Offc Pro Regular"
+                      ]
+                  ]
+              ]
+          },
+          "text-size": {
+              "base": 1,
+              "stops": [
+                  [
+                      4,
+                      10
+                  ],
+                  [
+                      16,
+                      15
+                  ]
+              ]
+          },
+          "text-transform": {
+              "base": 1,
+              "stops": [
+                  [
+                      13,
+                      "none"
+                  ],
+                  [
+                      14,
+                      "uppercase"
+                  ]
+              ]
+          },
+          "text-anchor": {
+              "base": 1,
+              "stops": [
+                  [
+                      13,
+                      "top"
+                  ],
+                  [
+                      14,
+                      "center"
+                  ]
+              ]
+          },
+          "text-padding": 4,
+          "text-offset": {
+              "base": 1,
+              "stops": [
+                  [
+                      13,
+                      [
+                          0,
+                          0.5
+                      ]
+                  ],
+                  [
+                      14,
+                      [
+                          0,
+                          0
+                      ]
+                  ]
+              ]
+          },
+          "text-letter-spacing": 0.05
+          };
+          
+          Mazemap.Data.getPoi(1001053280).then(poi => {
+            poi.properties.title = "Matthews 163"
+            console.log(poi);
+          });
+
+        mapViewer.current.setStyle(style);
+            console.log(style);
+          
           var floorBar = new Mazemap.ZLevelBarControl( {
               autoUpdate: true,
               maxHeight: 200 // Can also set initial maxHeight if no need for auto resize
