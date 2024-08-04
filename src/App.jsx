@@ -1,10 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './App.css';
-import panoramaImage from './unswtest.jpg'; // Import the image
+import panoramaImage0 from './panoramas/epictest.jpg'; // Import the image
+import panoramaImage1 from './panoramas/grass.jpg';
+import panoramaImage2 from './panoramas/main_lib.jpg';
+import panoramaImage3 from './panoramas/matthews_food.jpg';
+import panoramaImage4 from './panoramas/matthews.jpg';
 import exifr from 'exifr';
 import { getDistance } from 'geolib';
-
-
 
 function App() {
   const pannellumContainer = useRef(null);
@@ -14,10 +16,28 @@ function App() {
 
   useEffect(() => {
       pannellumViewer.current = pannellum.viewer(pannellumContainer.current, {
-        "hfov": 100.0,
-        "type": "equirectangular",
-        "panorama": panoramaImage,
-        autoLoad: true
+        default: {
+          firstScene: 'scene0',
+          autoLoad: true,
+          sceneFadeDuration: 1000,
+        },
+        scenes: {
+          scene0: {
+            panorama: panoramaImage0,
+          },
+          scene1: {
+            panorama: panoramaImage1,
+          },
+          scene2: {
+            panorama: panoramaImage2,
+          },
+          scene3: {
+            panorama: panoramaImage3,
+          },
+          scene4: {
+            panorama: panoramaImage4,
+          }
+        }
       });
   }, []);
   var marker;
@@ -53,7 +73,7 @@ function App() {
           marker = new Mazemap.MazeMarker( {
             color: "#988926",
             size: 20,
-            zLevel: mapViewer.current.zlevel // The floor zLevel coordinate is given here
+            zLevel: e.zLevel // The floor zLevel coordinate is given here
         } )
         .setLngLat( lngLat ) // Set the LngLat coordinates here
         .addTo(mapViewer.current); // Now add to the map
@@ -88,6 +108,14 @@ function App() {
                 },
           
         })
+
+        Mazemap.Data.getPoiAt(lngLat, marker.zLevel).then( poi => {
+
+          // Now you can do what you want with the returned POI
+          console.log('Found poi', poi);
+
+          // Place a marker on the map, or highlight the room  
+      })
         
         let cool = getDistance(
           {latitude: lngLat.lat, longitude: lngLat.lng},
@@ -282,9 +310,16 @@ function App() {
           } );
           mapViewer.current.addControl( floorBar, 'bottom-left' );
         })
-        console.log(exifr.parse(panoramaImage));
+        // console.log(exifr.parse(panoramaImage));
   }, []);
 
+  let level = 1;
+
+  const changeScene = (scene) => {
+    level += 1;
+    level %= 4;
+    pannellumViewer.current.loadScene(scene);
+  };
 
   return (
     <div className="App">
@@ -302,7 +337,7 @@ function App() {
         <div ref={mapViewer} id="map-container" style={{width: "450px", height: "300px", borderRadius: "5px"}}></div>
       </div>
         <div>
-        <button onClick={() => pannellumViewer.current.toggleFullscreen()}>click me for full screen</button>
+        <button onClick={() => changeScene(`scene${level}`)}>click me for new level</button>
         <p>You are {distance} metres away</p>
         </div>
     </div>
