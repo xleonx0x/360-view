@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './App.css';
-import panoramaImage0 from './panoramas/epictest.jpg'; // Import the image
+import panoramaImage0 from './panoramas/magicjpeg.jpg'; // Import the image
 import panoramaImage1 from './panoramas/grass.jpg';
 import panoramaImage2 from './panoramas/main_lib.jpg';
 import panoramaImage3 from './panoramas/matthews_food.jpg';
